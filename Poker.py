@@ -1,3 +1,6 @@
+import random
+
+
 class Card:
     SUITS = ["♣", "♦", "♥", "♠"]
     RANKS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
@@ -32,7 +35,7 @@ class Deck:
             for suit in Card.SUITS:
                 card = Card(rank, suit)
                 cards.append(card)
-        self._cards = cards
+        self._cards = tuple(cards)
 
     @property
     def cards(self):
@@ -41,5 +44,44 @@ class Deck:
     def __str__(self):
         return str(self.cards)
 
+    def shuffle(self):
+        # shuffles the cards in the deck
+        cards = list(self.cards)
+        random.shuffle(cards)
+        self._cards = tuple(cards)
+
+class Hand:
+    def __init__(self, deck):
+        # deck is shuffled before
+        cards = []
+        for i in range(5):
+            cards.append(deck.cards[i])
+        self._cards = tuple(cards)
+
+    def __str__(self):
+        return str(self._cards)
+
+    @property
+    def is_flush(self):
+        suit = self._cards[0].suit
+        for i in range(1, 5):
+            if self._cards[i].suit != suit:
+                return False
+
+        return True
+
+while True:
+    d = Deck()
+    d.shuffle()
+    hand = Hand(d)
+    if hand.is_flush:
+        print("Found a flush!")
+        print(hand)
+        break
+
+
+
 d = Deck()
-print(d.cards)
+d.shuffle()
+hand = Hand(d)
+print(hand)

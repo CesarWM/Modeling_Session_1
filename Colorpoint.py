@@ -13,7 +13,7 @@ class ColoredPoint(Point): # this class inherits from points
             raise Exception(f"That is an invalid color. Accepted colors are {self.COLORS}")
 
     def __str__(self):
-        return f"{self.COLORS}({self.x}, {self.y})"
+        return f"{self.color}({self.x}, {self.y})"
 
     @classmethod
     def add_extra_color(cls, color):
